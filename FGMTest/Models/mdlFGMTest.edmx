@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_FGMTESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HISTORICO_LOGIN">
+          <Key>
+            <PropertyRef Name="HIST_LOG_ID" />
+          </Key>
+          <Property Name="HIST_LOG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HIST_LOG_FECHA" Type="datetime" Nullable="false" />
+          <Property Name="USU_CORREO" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LOGS">
+          <Key>
+            <PropertyRef Name="LOG_ID" />
+          </Key>
+          <Property Name="LOG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LOG_ERROR" Type="bit" />
+          <Property Name="LOG_MENSAJE" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="LOG_FECHA" Type="datetime" Nullable="false" />
+          <Property Name="LOG_CAMPO_AUX1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LOG_CAMPO_AUX2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LOG_CAMPO_AUX3" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="PROD_NOMBRE" />
+          </Key>
+          <Property Name="PROD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PROD_NOMBRE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PROD_DESCRIPCION" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="PROD_PRECIO" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PROD_ELIMINADO" Type="bit" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="USU_CORREO" />
+          </Key>
+          <Property Name="USU_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USU_NOMBRE" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="USU_CORREO" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="USU_CONTRA" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="USU_SALT" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="USU_ACTIVO" Type="bit" />
+          <Property Name="USU_FECHA_CREACION" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__HISTORICO__USU_C__398D8EEE">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="HISTORICO_LOGIN" Type="Self.HISTORICO_LOGIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USU_CORREO" />
+            </Principal>
+            <Dependent Role="HISTORICO_LOGIN">
+              <PropertyRef Name="USU_CORREO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_FGMTESTModelStoreContainer">
+          <EntitySet Name="HISTORICO_LOGIN" EntityType="Self.HISTORICO_LOGIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGS" EntityType="Self.LOGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__HISTORICO__USU_C__398D8EEE" Association="Self.FK__HISTORICO__USU_C__398D8EEE">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="HISTORICO_LOGIN" EntitySet="HISTORICO_LOGIN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_FGMTESTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HISTORICO_LOGIN">
+          <Key>
+            <PropertyRef Name="HIST_LOG_ID" />
+          </Key>
+          <Property Name="HIST_LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HIST_LOG_FECHA" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USU_CORREO" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__HISTORICO__USU_C__398D8EEE" FromRole="HISTORICO_LOGIN" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="PROD_NOMBRE" />
+          </Key>
+          <Property Name="PROD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PROD_NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PROD_DESCRIPCION" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PROD_PRECIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PROD_ELIMINADO" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="USU_CORREO" />
+          </Key>
+          <Property Name="USU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USU_NOMBRE" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USU_CORREO" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USU_CONTRA" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USU_ACTIVO" Type="Boolean" />
+          <Property Name="USU_FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="HISTORICO_LOGIN" Relationship="Self.FK__HISTORICO__USU_C__398D8EEE" FromRole="USUARIO" ToRole="HISTORICO_LOGIN" />
+          <Property Name="USU_SALT" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__HISTORICO__USU_C__398D8EEE">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="HISTORICO_LOGIN" Type="Self.HISTORICO_LOGIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USU_CORREO" />
+            </Principal>
+            <Dependent Role="HISTORICO_LOGIN">
+              <PropertyRef Name="USU_CORREO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_FGMTESTEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HISTORICO_LOGIN" EntityType="Self.HISTORICO_LOGIN" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+          <AssociationSet Name="FK__HISTORICO__USU_C__398D8EEE" Association="Self.FK__HISTORICO__USU_C__398D8EEE">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="HISTORICO_LOGIN" EntitySet="HISTORICO_LOGIN" />
+          </AssociationSet>
+          <EntitySet Name="LOGS" EntityType="DB_FGMTESTModel.LOGS" />
+        </EntityContainer>
+        <EntityType Name="LOGS">
+          <Key>
+            <PropertyRef Name="LOG_ID" />
+          </Key>
+          <Property Name="LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LOG_ERROR" Type="Boolean" />
+          <Property Name="LOG_MENSAJE" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LOG_FECHA" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LOG_CAMPO_AUX1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LOG_CAMPO_AUX2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LOG_CAMPO_AUX3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_FGMTESTModelStoreContainer" CdmEntityContainer="DB_FGMTESTEntities1">
+          <EntitySetMapping Name="HISTORICO_LOGIN">
+            <EntityTypeMapping TypeName="DB_FGMTESTModel.HISTORICO_LOGIN">
+              <MappingFragment StoreEntitySet="HISTORICO_LOGIN">
+                <ScalarProperty Name="HIST_LOG_ID" ColumnName="HIST_LOG_ID" />
+                <ScalarProperty Name="HIST_LOG_FECHA" ColumnName="HIST_LOG_FECHA" />
+                <ScalarProperty Name="USU_CORREO" ColumnName="USU_CORREO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTO">
+            <EntityTypeMapping TypeName="DB_FGMTESTModel.PRODUCTO">
+              <MappingFragment StoreEntitySet="PRODUCTO">
+                <ScalarProperty Name="PROD_ID" ColumnName="PROD_ID" />
+                <ScalarProperty Name="PROD_NOMBRE" ColumnName="PROD_NOMBRE" />
+                <ScalarProperty Name="PROD_DESCRIPCION" ColumnName="PROD_DESCRIPCION" />
+                <ScalarProperty Name="PROD_PRECIO" ColumnName="PROD_PRECIO" />
+                <ScalarProperty Name="PROD_ELIMINADO" ColumnName="PROD_ELIMINADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO">
+            <EntityTypeMapping TypeName="DB_FGMTESTModel.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="USU_SALT" ColumnName="USU_SALT" />
+                <ScalarProperty Name="USU_ID" ColumnName="USU_ID" />
+                <ScalarProperty Name="USU_NOMBRE" ColumnName="USU_NOMBRE" />
+                <ScalarProperty Name="USU_CORREO" ColumnName="USU_CORREO" />
+                <ScalarProperty Name="USU_CONTRA" ColumnName="USU_CONTRA" />
+                <ScalarProperty Name="USU_ACTIVO" ColumnName="USU_ACTIVO" />
+                <ScalarProperty Name="USU_FECHA_CREACION" ColumnName="USU_FECHA_CREACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGS">
+            <EntityTypeMapping TypeName="DB_FGMTESTModel.LOGS">
+              <MappingFragment StoreEntitySet="LOGS">
+                <ScalarProperty Name="LOG_CAMPO_AUX3" ColumnName="LOG_CAMPO_AUX3" />
+                <ScalarProperty Name="LOG_CAMPO_AUX2" ColumnName="LOG_CAMPO_AUX2" />
+                <ScalarProperty Name="LOG_CAMPO_AUX1" ColumnName="LOG_CAMPO_AUX1" />
+                <ScalarProperty Name="LOG_FECHA" ColumnName="LOG_FECHA" />
+                <ScalarProperty Name="LOG_MENSAJE" ColumnName="LOG_MENSAJE" />
+                <ScalarProperty Name="LOG_ERROR" ColumnName="LOG_ERROR" />
+                <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

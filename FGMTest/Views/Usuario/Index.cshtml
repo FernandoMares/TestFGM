@@ -1,0 +1,57 @@
+﻿@model IEnumerable<FGMTest.Models.USUARIO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>¡Listado de usuarios!</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Correo
+        </th>
+        <th>
+            Fecha de creación
+        </th>
+        <th>
+            Usuario Activo
+        </th>
+        <th>Pass/Salt Encriptado</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.USU_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USU_NOMBRE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USU_CORREO)
+        </td>
+        <td>
+            @{ 
+                string fecha = item.USU_FECHA_CREACION.ToString("dd/MM/yyyy hh:mm:ss");
+            }
+            @fecha
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USU_ACTIVO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USU_CONTRA)/
+            @Html.DisplayFor(modelItem => item.USU_SALT)
+        </td>
+    </tr>
+}
+
+</table>
